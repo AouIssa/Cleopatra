@@ -1,21 +1,24 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="/">Cleopatra</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/shop">Shop</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/about">About Us</a>
-                </li>
-            </ul>
+<header class="bg-white shadow">
+    <div class="container mx-auto px-6 py-3">
+        <div class="flex items-center justify-between">
+            <div>
+                <a href="/" class="text-xl font-semibold text-gray-800">Cleopatra</a>
+            </div>
+            <nav class="space-x-4 text-gray-600">
+                <a href="#" class="hover:text-gray-800">Shop</a>
+                <a href="#" class="hover:text-gray-800">About</a>
+                <a href="#" class="hover:text-gray-800">Contact</a>
+                <!-- Add login and register links -->
+                @guest
+                    <a href="{{ route('login') }}" class="hover:text-gray-800">Login</a>
+                    <a href="{{ route('register') }}" class="hover:text-gray-800">Register</a>
+                @else
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="hover:text-gray-800">Logout</a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                        @csrf
+                    </form>
+                @endguest
+            </nav>
         </div>
     </div>
-</nav>
+</header>

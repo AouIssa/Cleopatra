@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
-
+use App\Http\Controllers\AuthController; // Add this line
 
 /*
 |--------------------------------------------------------------------------
@@ -24,3 +24,8 @@ Route::get('/hello', function () {
 });
 
 Route::get('/', [ProductController::class, 'index']);
+
+// Add these lines for login and register pages
+
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
