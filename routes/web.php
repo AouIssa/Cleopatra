@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\AuthController; // Add this line
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +26,11 @@ Route::get('/hello', function () {
 
 Route::get('/', [ProductController::class, 'index']);
 
-// Add these lines for login and register pages
 
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
