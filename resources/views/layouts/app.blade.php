@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Cleopatra')</title>
     @vite('resources/css/app.css')
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script>
+        window.csrfToken = "{{ csrf_token() }}";
+    </script>
+
 </head>
 
 <body>
@@ -16,6 +22,8 @@
     @include('partials.footer')
 
     @include('cart')
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
         window.toggleCart = function() {
@@ -68,6 +76,26 @@
                 });
         }
 
+        function createReduceQuantityButton(itemId) {
+            const reduceQuantityButton = document.createElement('button');
+            reduceQuantityButton.textContent = 'Reduce Quantity';
+            reduceQuantityButton.classList.add('bg-red-500', 'text-white', 'px-3', 'py-1', 'rounded', 'hover:bg-red-600',
+                'ml-2');
+            reduceQuantityButton.addEventListener('click', () => {
+                // Make an AJAX request to reduce the quantity of the item
+                axios.post('/cart/reduce', {
+                    product_id: itemId,
+                    _token: csrfToken,
+                }).then((response) => {
+                    cart = response.data;
+                    updateCart();
+                }).catch((error) => {
+                    console.error(error);
+                });
+            });
+            return reduceQuantityButton;
+        }
+
         function updateCart() {
             fetch('/cart/data')
                 .then(response => response.json())
@@ -100,9 +128,12 @@
                         itemQuantity.textContent = `Quantity: ${item.quantity}`;
                         itemQuantity.classList.add('text-gray-600', 'font-semibold');
 
+                        const reduceQuantityButton = createReduceQuantityButton(itemId);
+
                         itemDiv.appendChild(itemName);
                         itemDiv.appendChild(itemPrice);
-                        itemDiv.appendChild(itemQuantity); // Add the item quantity to the item div
+                        itemDiv.appendChild(itemQuantity);
+                        itemDiv.appendChild(reduceQuantityButton);
                         cartItemsDiv.appendChild(itemDiv);
                     }
                 })

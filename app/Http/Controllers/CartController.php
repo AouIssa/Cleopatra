@@ -39,4 +39,23 @@ class CartController extends Controller
 
         return response()->json(['cart' => $cart]);
     }
+
+    public function reduce(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required|integer|exists:products,id',
+        ]);
+
+        $productId = $request->input('product_id');
+        $cart = session('cart', []);
+
+        if (isset($cart[$productId])) {
+            $cart[$productId]['quantity'] -= 1;
+            if ($cart[$productId]['quantity'] <= 0) {
+                unset($cart[$productId]);
+            }
+        }
+
+        session(['cart' => $cart]);
+    }
 }

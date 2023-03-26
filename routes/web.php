@@ -38,3 +38,5 @@ Route::post('/register', [RegisterController::class, 'register']);
 
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::get('/cart/data', [CartController::class, 'getCartData'])->name('cart.data');
+
+Route::post('/cart/reduce', [CartController::class, 'reduce'])->name('cart.reduce');
