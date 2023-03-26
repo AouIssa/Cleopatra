@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Cart;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -30,4 +32,9 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
+    }
 }
