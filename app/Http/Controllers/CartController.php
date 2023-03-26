@@ -2,45 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cart;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Product;
 
 class CartController extends Controller
 {
-    public function __construct()
+    public function add(Request $request)
     {
-        $this->middleware('auth');
-    }
-
-    public function index()
-    {
-        $user = Auth::user();
-        $cartItems = $user->cart()->with('product')->get();
-
-        return view('cart.index', compact('cartItems'));
-    }
-
-    public function addToCart(Request $request)
-    {
-        $user = Auth::user();
-
-        $cart = Cart::firstOrCreate([
-            'user_id' => $user->id,
-            'product_id' => $request->product_id,
+        $request->validate([
+            'product_id' => 'required|integer|exists:products,id',
         ]);
 
-        $cart->quantity += $request->quantity;
-        $cart->save();
+        $productId = $request->input('product_id');
+        $product = Product::find($productId);
 
-        return redirect()->back()->with('success', 'Product added to cart successfully!');
+        $cart = session('cart', []);
+        $cart[$productId] = [
+            'id' => $productId,
+            'name' => $product->name,
+            'price' => $product->price,
+            'quantity' => 1,
+        ];
+
+        session(['cart' => $cart]);
+
+        return response()->json(['message' => 'Product added to cart']);
     }
 
-    public function removeFromCart(Cart $cart)
+    public function getCartData()
     {
-        $this->authorize('delete', $cart);
+        $cart = session('cart', []);
 
-        $cart->delete();
-        return redirect()->back()->with('success', 'Product removed from cart successfully!');
+        return response()->json(['cart' => $cart]);
     }
 }

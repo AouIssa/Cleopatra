@@ -1,4 +1,4 @@
-<footer class="bg-white shadow mt-12">
+<footer class="bg-sky-200 shadow mt-12">
      <div class="container mx-auto px-6 py-4">
           <div class="flex justify-between items-center">
                <div>

@@ -8,12 +8,15 @@
                 <a href="#" class="hover:text-gray-800">Shop</a>
                 <a href="#" class="hover:text-gray-800">About</a>
                 <a href="#" class="hover:text-gray-800">Contact</a>
+                <a href="#" onclick="toggleCart()" class="hover:text-gray-800">Cart</a>
                 <!-- Add login and register links -->
                 @guest
                     <a href="{{ route('login') }}" class="hover:text-gray-800">Login</a>
                     <a href="{{ route('register') }}" class="hover:text-gray-800">Register</a>
                 @else
-                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="hover:text-gray-800">Logout</a>
+                    <a href="{{ route('logout') }}"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                        class="hover:text-gray-800">Logout</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                         @csrf
                     </form>

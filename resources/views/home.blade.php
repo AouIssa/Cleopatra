@@ -21,6 +21,10 @@
                     <p class="text-gray-600 mb-4">{{ $product->description }}</p>
                     <div class="flex items-center justify-between">
                         <span class="text-xl font-bold text-gray-800">${{ number_format($product->price, 2) }}</span>
+                        <button data-product-id="{{ $product->id }}"
+                            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 add-to-cart">
+                            Add to Cart
+                        </button>
                     </div>
                 </div>
             @endforeach

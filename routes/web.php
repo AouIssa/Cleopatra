@@ -36,7 +36,5 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 
-Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
-
-Route::post('/cart', [CartController::class, 'addToCart'])->name('cart.add');
-Route::delete('/cart/{cart}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::get('/cart/data', [CartController::class, 'getCartData'])->name('cart.data');
