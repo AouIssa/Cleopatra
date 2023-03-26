@@ -17,12 +17,16 @@ class CartController extends Controller
         $product = Product::find($productId);
 
         $cart = session('cart', []);
-        $cart[$productId] = [
-            'id' => $productId,
-            'name' => $product->name,
-            'price' => $product->price,
-            'quantity' => 1,
-        ];
+        if (isset($cart[$productId])) {
+            $cart[$productId]['quantity'] += 1;
+        } else {
+            $cart[$productId] = [
+                'id' => $productId,
+                'name' => $product->name,
+                'price' => $product->price,
+                'quantity' => 1,
+            ];
+        }
 
         session(['cart' => $cart]);
 

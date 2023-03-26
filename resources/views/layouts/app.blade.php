@@ -95,6 +95,15 @@
                         itemDiv.appendChild(itemName);
                         itemDiv.appendChild(itemPrice);
                         cartItemsDiv.appendChild(itemDiv);
+
+                        const itemQuantity = document.createElement('p');
+                        itemQuantity.textContent = `Quantity: ${item.quantity}`;
+                        itemQuantity.classList.add('text-gray-600', 'font-semibold');
+
+                        itemDiv.appendChild(itemName);
+                        itemDiv.appendChild(itemPrice);
+                        itemDiv.appendChild(itemQuantity); // Add the item quantity to the item div
+                        cartItemsDiv.appendChild(itemDiv);
                     }
                 })
                 .catch(error => {
